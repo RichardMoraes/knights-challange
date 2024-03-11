@@ -1,20 +1,21 @@
-export interface Knight {
+export interface IKnight {
+  _id: string;
   name: string;
   nickname: string;
   birthday: Date;
-  weapons: Weapon[];
-  attributes: Attributes;
+  weapons: IWeapon[];
+  attributes: IAttributes;
   keyAttribute: string;
 }
 
-interface Weapon {
+interface IWeapon {
   name: string;
   mod: number;
   attr: string;
   equipped: boolean;
 }
 
-interface Attributes {
+interface IAttributes {
   strength: number;
   dexterity: number;
   constitution: number;

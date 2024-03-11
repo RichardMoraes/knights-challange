@@ -1,61 +1,112 @@
-import { Injectable, UnprocessableEntityException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  UnprocessableEntityException,
+} from '@nestjs/common';
 import { CreateKnightDto } from './dto/create-knight.dto';
 import { UpdateKnightDto } from './dto/update-knight.dto';
-import { Knight } from './knights.interface';
-import { v4 as uuidv4 } from 'uuid';
-import { RedisRepository } from '../redis/repository/redis.repository';
-import { RedisPrefixEnum } from '../redis/redis-prefix.enum';
-import { validate, validateOrReject } from 'class-validator';
+import { validateOrReject } from 'class-validator';
+import { Model } from 'mongoose';
+import { InjectModel } from '@nestjs/mongoose';
+import { KnightDocument } from './schema/knight.model';
+import { Knight } from './schema/knight';
+import { IKnight } from './schema/knights.interface';
 
 @Injectable()
 export class KnightsService {
-  constructor(private readonly redisRepository: RedisRepository) {}
+  constructor(
+    @InjectModel('Knight') private knightModel: Model<KnightDocument>,
+  ) {}
 
   async create(createKnightDto: CreateKnightDto): Promise<Knight> {
-    // Try create a new Knight
+    const existingKnight = await this.knightModel
+      .findOne({ name: createKnightDto.name })
+      .exec();
+
+    // Validate if the Knight already exists
+    if (existingKnight) {
+      if (existingKnight.inHallOfHeroes) {
+        throw new UnprocessableEntityException(
+          'Um knight com este nome já existiu e é lembrado como um herói memorável!',
+        );
+      } else {
+        throw new UnprocessableEntityException(
+          'Um knight com o mesmo nome já existe.',
+        );
+      }
+    }
+
+    // Validate if theres more than one weapon equipped
+    const equippedWeaponsCount = createKnightDto.weapons.filter(
+      (weapon) => weapon.equipped,
+    ).length;
+
+    if (equippedWeaponsCount > 1)
+      throw new UnprocessableEntityException(
+        'Apenas uma arma pode estar equipada.',
+      );
+
     try {
-      // Validade Knight DTO
       await validateOrReject(createKnightDto);
-
-      // Generate unique UUID identifier
-      const knightUUID: string = uuidv4(); 
-      const knight: Knight = {
-        name: createKnightDto.name,
-        nickname: createKnightDto.nickname,
-        birthday: createKnightDto.birthday,
-        weapons: createKnightDto.weapons,
-        attributes: createKnightDto.attributes,
-        keyAttribute: createKnightDto.keyAttribute,
-      };
-
-      // Create the Knight
-      await this.redisRepository.set(
-        RedisPrefixEnum.KNIGHT,
-        knightUUID,
-        JSON.stringify(knight),
+      const knight = new Knight(
+        await new this.knightModel(createKnightDto).save(),
       );
 
       return knight;
     } catch (error) {
       throw new UnprocessableEntityException(
-        'Erro ao criar Knight, verifique os dados e tente novamente.',
+        'Erro ao criar knight, verifique os dados e tente novamente.',
       );
     }
   }
 
-  findAll() {
-    return `This action returns all knight`;
+  async findAll(filter: string): Promise<Knight[]> {
+    const knights = await this.knightModel
+      .find({ inHallOfHeroes: filter === 'heroes' ? true : false })
+      .exec();
+
+    return knights.map((knight) => new Knight(knight));
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} knight`;
+  async findOne(id: string): Promise<IKnight> {
+    const knight = await this.knightModel.findById(id).exec();
+    if (!knight) throw new NotFoundException('Knight não encontrado.');
+
+    return knight;
   }
 
-  update(id: number, updateKnightDto: UpdateKnightDto) {
-    return `This action updates a #${id} knight`;
+  async update(id: string, updateKnightDto: UpdateKnightDto): Promise<IKnight> {
+    const existingKnight = await this.knightModel.findById(id).exec();
+    if (!existingKnight) throw new NotFoundException('Knight não encontrado.');
+
+    if (existingKnight.inHallOfHeroes)
+      throw new UnprocessableEntityException(
+        'Não foi possível atualizar, esse herói já foi eternizado com um apelido.',
+      );
+
+    if (!updateKnightDto.nickname)
+      throw new UnprocessableEntityException(
+        'O apelido do knight é obrigatório',
+      );
+
+    existingKnight.nickname = updateKnightDto.nickname;
+    return await existingKnight.save();
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} knight`;
+  async remove(id: string): Promise<{ message: string }> {
+    const knight = await this.knightModel.findById(id).exec();
+    if (!knight) throw new NotFoundException(`Knight não encontrado.`);
+
+    if (knight.inHallOfHeroes)
+      throw new UnprocessableEntityException(
+        'Um knight com este nome já existiu e é lembrado como um herói memorável!',
+      );
+
+    knight.inHallOfHeroes = true;
+    await knight.save();
+
+    return {
+      message: `O knight ${knight.name} será agora eternizado como um herói!`,
+    };
   }
 }

@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { KnightsService } from './knights.service';
-import { Knight } from './knights.interface';
+import { Knight } from './schema/knights.interface';
 import { CreateKnightDto } from './dto/create-knight.dto';
 import { RedisRepository } from '../redis/repository/redis.repository';
 import { UnprocessableEntityException } from '@nestjs/common';

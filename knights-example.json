@@ -1,0 +1,235 @@
+[
+    {
+      "name": "Sir Galahad",
+      "nickname": "O Puro",
+      "birthday": "1985-03-15T00:00:00Z",
+      "weapons": [
+        {
+          "name": "Excalibur",
+          "mod": 5,
+          "attr": "strength",
+          "equipped": true
+        }
+      ],
+      "attributes": {
+        "strength": 18,
+        "dexterity": 14,
+        "constitution": 16,
+        "intelligence": 12,
+        "wisdom": 10,
+        "charisma": 15
+      },
+      "keyAttribute": "strength"
+    },
+    {
+      "name": "Sir Lancelot",
+      "nickname": "O Bravo",
+      "birthday": "1978-06-20T00:00:00Z",
+      "weapons": [
+        {
+          "name": "Lança",
+          "mod": 4,
+          "attr": "dexterity",
+          "equipped": true
+        },
+        {
+          "name": "Escudo",
+          "mod": 3,
+          "attr": "constitution",
+          "equipped": false
+        }
+      ],
+      "attributes": {
+        "strength": 16,
+        "dexterity": 17,
+        "constitution": 15,
+        "intelligence": 11,
+        "wisdom": 9,
+        "charisma": 13
+      },
+      "keyAttribute": "dexterity"
+    },
+    {
+      "name": "Sir Percival",
+      "nickname": "O Buscador",
+      "birthday": "1990-11-02T00:00:00Z",
+      "weapons": [
+        {
+          "name": "Arco",
+          "mod": 3,
+          "attr": "dexterity",
+          "equipped": true
+        }
+      ],
+      "attributes": {
+        "strength": 14,
+        "dexterity": 18,
+        "constitution": 14,
+        "intelligence": 13,
+        "wisdom": 11,
+        "charisma": 16
+      },
+      "keyAttribute": "dexterity"
+    },
+    {
+      "name": "Sir Gawain",
+      "nickname": "O Valente",
+      "birthday": "1982-09-10T00:00:00Z",
+      "weapons": [
+        {
+          "name": "Espada",
+          "mod": 4,
+          "attr": "strength",
+          "equipped": true
+        }
+      ],
+      "attributes": {
+        "strength": 17,
+        "dexterity": 15,
+        "constitution": 16,
+        "intelligence": 12,
+        "wisdom": 10,
+        "charisma": 14
+      },
+      "keyAttribute": "strength"
+    },
+    {
+      "name": "Sir Tristan",
+      "nickname": "O Leal",
+      "birthday": "1987-12-05T00:00:00Z",
+      "weapons": [
+        {
+          "name": "Maça",
+          "mod": 3,
+          "attr": "strength",
+          "equipped": true
+        }
+      ],
+      "attributes": {
+        "strength": 16,
+        "dexterity": 13,
+        "constitution": 17,
+        "intelligence": 11,
+        "wisdom": 10,
+        "charisma": 15
+      },
+      "keyAttribute": "constitution"
+    },
+    {
+        "name": "Sir Artur",
+        "nickname": "O Poderoso",
+        "birthday": "1980-01-25T00:00:00Z",
+        "weapons": [
+          {
+            "name": "Machado",
+            "mod": 5,
+            "attr": "strength",
+            "equipped": true
+          }
+        ],
+        "attributes": {
+          "strength": 20,
+          "dexterity": 12,
+          "constitution": 15,
+          "intelligence": 11,
+          "wisdom": 9,
+          "charisma": 14
+        },
+        "keyAttribute": "strength"
+      },
+      {
+        "name": "Sir Fernando",
+        "nickname": "O Justo",
+        "birthday": "1975-07-17T00:00:00Z",
+        "weapons": [
+          {
+            "name": "Besta",
+            "mod": 4,
+            "attr": "dexterity",
+            "equipped": true
+          }
+        ],
+        "attributes": {
+          "strength": 14,
+          "dexterity": 18,
+          "constitution": 16,
+          "intelligence": 13,
+          "wisdom": 12,
+          "charisma": 16
+        },
+        "keyAttribute": "dexterity"
+      },
+      {
+        "name": "Sir Hugo",
+        "nickname": "O Corajoso",
+        "birthday": "1988-04-30T00:00:00Z",
+        "weapons": [
+          {
+            "name": "Espada Longa",
+            "mod": 4,
+            "attr": "strength",
+            "equipped": true
+          }
+        ],
+        "attributes": {
+          "strength": 18,
+          "dexterity": 15,
+          "constitution": 17,
+          "intelligence": 14,
+          "wisdom": 11,
+          "charisma": 15
+        },
+        "keyAttribute": "constitution"
+      },
+      {
+        "name": "Sir Bernardo",
+        "nickname": "O Sábio",
+        "birthday": "1983-10-12T00:00:00Z",
+        "weapons": [
+          {
+            "name": "Cajado",
+            "mod": 3,
+            "attr": "wisdom",
+            "equipped": true
+          }
+        ],
+        "attributes": {
+          "strength": 12,
+          "dexterity": 11,
+          "constitution": 14,
+          "intelligence": 18,
+          "wisdom": 20,
+          "charisma": 16
+        },
+        "keyAttribute": "wisdom"
+      },
+      {
+        "name": "Sir Rodrigo",
+        "nickname": "O Astuto",
+        "birthday": "1986-11-08T00:00:00Z",
+        "weapons": [
+          {
+            "name": "Adaga",
+            "mod": 3,
+            "attr": "dexterity",
+            "equipped": true
+          },
+          {
+            "name": "Escudo",
+            "mod": 2,
+            "attr": "constitution",
+            "equipped": true
+          }
+        ],
+        "attributes": {
+          "strength": 15,
+          "dexterity": 18,
+          "constitution": 16,
+          "intelligence": 14,
+          "wisdom": 13,
+          "charisma": 17
+        },
+        "keyAttribute": "dexterity"
+      }
+  ]
+  

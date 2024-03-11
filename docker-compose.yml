@@ -1,15 +1,39 @@
 version: '3.8'
 services:
-  redis:
-    image: redis:7.2-alpine
+  nest:
+    build: ./backend
+    ports:
+      - '${BACKEND_PORT}:3000'
+    environment:
+      FRONTEND_URL: ${FRONTEND_URL}
+      MONGODB_HOST: ${MONGODB_HOST}
+      MONGODB_PORT: ${MONGODB_PORT}
+      MONGODB_USER: ${MONGODB_USER}
+      MONGODB_PASSWORD: ${MONGODB_PASSWORD}
+      MONGODB_DATABASE: ${MONGODB_DATABASE}
+    networks:
+      - mongo-compose-network
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo
     restart: always
     ports:
-      - '6379:6379'
+      - "${MONGODB_PORT}:27017"
     volumes:
-      - redis_data:/data
+      - ./database/mongodb_data:/data/db
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    networks:
+      - mongo-compose-network
     environment:
-      - REDIS_PASSWORD=${REDIS_PASSWORD}
-    command: ["redis-server", "--appendonly", "yes", "--requirepass", "${REDIS_PASSWORD}"]
-
+      MONGO_INITDB_ROOT_USERNAME: ${MONGODB_ROOT_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_ROOT_PASSWORD}
+      MONGO_INITDB_DATABASE: ${MONGODB_DATABASE}
+      
+networks: 
+    mongo-compose-network:
+      driver: bridge
 volumes:
-  redis_data:
+  mongodb_data:
+    driver: local
